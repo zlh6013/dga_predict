@@ -14,6 +14,7 @@ from sklearn.metrics import roc_curve, auc
 
 RESULT_FILE = 'results.pkl'
 
+
 def run_experiments(isbigram=True, islstm=True, nfolds=10):
     """Runs all experiments"""
     bigram_results = None
@@ -26,6 +27,7 @@ def run_experiments(isbigram=True, islstm=True, nfolds=10):
         lstm_results = lstm.run(nfolds=nfolds)
 
     return bigram_results, lstm_results
+
 
 def create_figs(isbigram=True, islstm=True, nfolds=10, force=False):
     """Create figures"""
@@ -79,6 +81,7 @@ def create_figs(isbigram=True, islstm=True, nfolds=10, force=False):
         plt.tick_params(axis='both', labelsize=22)
         plt.savefig('results.png')
 
+
 def calc_macro_roc(fpr, tpr):
     """Calcs macro ROC on log scale"""
     # Create log scale domain
@@ -91,5 +94,6 @@ def calc_macro_roc(fpr, tpr):
 
     return all_fpr, mean_tpr / len(tpr), auc(all_fpr, mean_tpr) / len(tpr)
 
+
 if __name__ == "__main__":
-    create_figs(nfolds=1) # Run with 1 to make it fast
+    create_figs(nfolds=1)  # Run with 1 to make it fast
