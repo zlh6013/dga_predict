@@ -18,12 +18,14 @@ ALEXA_1M = 'http://s3.amazonaws.com/alexa-static/top-1m.csv.zip'
 # Our ourput file containg all the training data
 DATA_FILE = 'traindata.pkl'
 
+
 def get_alexa(num, address=ALEXA_1M, filename='top-1m.csv'):
     """Grabs Alexa 1M"""
     url = urlopen(address)
     zipfile = ZipFile(StringIO(url.read()))
     return [tldextract.extract(x.split(',')[1]).domain for x in \
             zipfile.read(filename).split()[:num]]
+
 
 def gen_malicious(num_per_dga=10000):
     """Generates num_per_dga of each DGA"""
@@ -106,9 +108,8 @@ def gen_malicious(num_per_dga=10000):
                                           tld=None,
                                           base=random.randint(2, 2**32))
         labels += ['simda']*segs_size
-
-
     return domains, labels
+
 
 def gen_data(force=False):
     """Grab all data for train/test and save
@@ -124,6 +125,7 @@ def gen_data(force=False):
         labels += ['benign']*len(domains)
 
         pickle.dump(zip(labels, domains), open(DATA_FILE, 'w'))
+
 
 def get_data(force=False):
     """Returns data and labels"""
